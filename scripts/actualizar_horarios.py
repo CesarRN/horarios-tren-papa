@@ -230,7 +230,15 @@ def main() -> None:
 
     for coleccion in (ida, vuelta):
         for f in coleccion:
-            coleccion[f].sort(key=lambda r: r["salida"])
+            vistos = set()
+            unicos = []
+            for r in coleccion[f]:
+                clave = (r["salida"], r["estacion_origen"], r["llegada"], r["estacion_destino"])
+                if clave not in vistos:
+                    vistos.add(clave)
+                    unicos.append(r)
+            unicos.sort(key=lambda r: r["salida"])
+            coleccion[f] = unicos
 
     resultado = {
         "generado": dt.datetime.now().isoformat(timespec="seconds"),
