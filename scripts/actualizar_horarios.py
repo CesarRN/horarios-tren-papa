@@ -83,21 +83,38 @@ def construye_calendario(calendar: list[dict], calendar_dates: list[dict],
     dias_semana = ["monday", "tuesday", "wednesday", "thursday", "friday",
                     "saturday", "sunday"]
 
+    if calendar:
+        columnas = set(calendar[0].keys())
+        print(f"Columnas de calendar.txt: {sorted(columnas)}")
+    if calendar_dates:
+        print(f"Columnas de calendar_dates.txt: {sorted(calendar_dates[0].keys())}")
+
+    minimo, maximo = min(dias), max(dias)
+
     for row in calendar:
-        sid = row["service_id"]
-        ini = dt.datetime.strptime(row["start_date"], "%Y%m%d").date()
-        fin = dt.datetime.strptime(row["end_date"], "%Y%m%d").date()
+        sid = row.get("service_id")
+        if not sid:
+            continue
+        ini_str, fin_str = row.get("start_date"), row.get("end_date")
+        # Si el feed no trae rango de fechas, asumimos que aplica a todo el
+        # periodo consultado y dejamos que calendar_dates.txt afine el resto.
+        ini = dt.datetime.strptime(ini_str, "%Y%m%d").date() if ini_str else minimo
+        fin = dt.datetime.strptime(fin_str, "%Y%m%d").date() if fin_str else maximo
         for d in dias:
-            if ini <= d <= fin and row[dias_semana[d.weekday()]] == "1":
+            if ini <= d <= fin and row.get(dias_semana[d.weekday()]) == "1":
                 activos[sid].add(d)
 
     for row in calendar_dates:
-        sid = row["service_id"]
-        fecha = dt.datetime.strptime(row["date"], "%Y%m%d").date()
+        sid = row.get("service_id")
+        fecha_str = row.get("date")
+        tipo = row.get("exception_type")
+        if not sid or not fecha_str:
+            continue
+        fecha = dt.datetime.strptime(fecha_str, "%Y%m%d").date()
         if fecha in dias:
-            if row["exception_type"] == "1":
+            if tipo == "1":
                 activos[sid].add(fecha)
-            elif row["exception_type"] == "2":
+            elif tipo == "2":
                 activos[sid].discard(fecha)
 
     return activos
