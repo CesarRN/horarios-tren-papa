@@ -45,13 +45,6 @@
   .pantalla{ display:none; }
   .pantalla.activa{ display:block; }
 
-  .volver{
-    display:inline-flex; align-items:center; gap:6px;
-    font-size:20px; background:none; border:none; color:var(--azul);
-    padding:10px 4px; margin-bottom:4px; cursor:pointer;
-  }
-  .volver:focus-visible{ outline:3px solid var(--foco); border-radius:8px; }
-
   .opciones-grandes{
     display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;
   }
@@ -60,27 +53,50 @@
   }
   .opcion{
     background:var(--tarjeta); border:3px solid var(--borde); border-radius:20px;
-    padding:22px 10px; display:flex; flex-direction:column; align-items:center;
-    gap:10px; cursor:pointer; font-size:22px; font-weight:600; color:var(--texto);
-    min-height:150px; justify-content:center;
+    padding:26px 8px; display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:14px; cursor:pointer; color:var(--texto);
+    min-height:160px;
   }
   .opcion:active{ transform:scale(0.98); }
   .opcion:focus-visible{ outline:4px solid var(--foco); }
   .opcion.seleccionada{ border-color:var(--azul-claro); background:#eaf4f8; }
-  .opcion svg{ width:64px; height:64px; }
-
-  .carrusel-dias{
-    display:flex; gap:12px; overflow-x:auto; padding:10px 4px 16px;
-    scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  .opcion svg{ width:60px; height:60px; }
+  .opcion .fila-iconos{
+    display:flex; align-items:center; justify-content:center; gap:10px;
   }
+  .opcion .flecha-direccion{ width:34px; height:34px; flex:0 0 auto; }
+
+  .volver{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:none; border:none; padding:10px; margin-bottom:4px; cursor:pointer;
+  }
+  .volver svg{ width:34px; height:34px; }
+  .volver:focus-visible{ outline:3px solid var(--foco); border-radius:8px; }
+
+  .carrusel-wrapper{ position:relative; margin:10px 0 16px; }
+  .carrusel-dias{
+    display:flex; gap:14px; overflow-x:auto; padding:10px 46px 16px;
+    scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+    scroll-behavior:smooth;
+  }
+  .flecha-scroll{
+    position:absolute; top:0; bottom:16px; width:40px;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:none; cursor:pointer; color:var(--azul-claro);
+    z-index:2;
+  }
+  .flecha-scroll.izq{ left:0; }
+  .flecha-scroll.der{ right:0; }
+  .flecha-scroll svg{ width:26px; height:26px; }
+  .flecha-scroll:focus-visible{ outline:4px solid var(--foco); border-radius:8px; }
   .dia{
     scroll-snap-align:center; flex:0 0 auto;
     background:var(--tarjeta); border:3px solid var(--borde); border-radius:18px;
-    min-width:110px; padding:16px 8px; text-align:center; cursor:pointer;
+    min-width:126px; padding:18px 8px; text-align:center; cursor:pointer;
   }
-  .dia .mes{ font-size:16px; text-transform:uppercase; color:#3a5560; }
-  .dia .num{ font-size:40px; font-weight:700; line-height:1.1; }
-  .dia .diasem{ font-size:16px; color:#3a5560; }
+  .dia .mes{ font-size:20px; text-transform:uppercase; color:#3a5560; font-weight:600; }
+  .dia .num{ font-size:56px; font-weight:700; line-height:1.05; }
+  .dia .diasem{ font-size:20px; color:#3a5560; }
   .dia.seleccionado{ border-color:var(--azul-claro); background:#eaf4f8; }
   .dia:focus-visible{ outline:4px solid var(--foco); }
 
@@ -101,14 +117,16 @@
   .aviso.error{ background:#fdecec; border-color:#d9534f; }
 
   .boton-principal{
-    display:block; width:100%; margin-top:22px; padding:18px;
-    background:var(--azul); color:#fff; border:none; border-radius:16px;
-    font-size:22px; font-weight:700; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    width:100%; margin-top:22px; padding:20px;
+    background:var(--azul); border:none; border-radius:16px; cursor:pointer;
   }
+  .boton-principal svg{ width:44px; height:44px; }
   .boton-principal:focus-visible{ outline:4px solid var(--foco); }
   .boton-principal.secundario{
-    background:#fff; color:var(--azul); border:3px solid var(--azul);
+    background:#fff; border:3px solid var(--azul);
   }
+  .boton-principal.secundario svg{ }
 
   .paso-titulo{ font-size:22px; font-weight:700; margin:14px 0 4px; }
 
@@ -128,50 +146,140 @@
   <section class="pantalla activa" id="pantalla-sentido">
     <p class="paso-titulo">¿A dónde quieres ir?</p>
     <div class="opciones-grandes">
-      <button class="opcion" data-sentido="ida">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="1.6"><path d="M12 2C7.6 2 4 5.6 4 10c0 6 8 12 8 12s8-6 8-12c0-4.4-3.6-8-8-8z" fill="#c0392b"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
-        Madrid<br>→ Cañada
+      <button class="opcion" data-sentido="ida" aria-label="Madrid a Cañada">
+        <div class="fila-iconos">
+          <svg viewBox="0 0 64 64"><!-- Oso y el Madroño (Madrid) -->
+            <ellipse cx="32" cy="56" rx="22" ry="4" fill="#d8e0e3"/>
+            <rect x="40" y="18" width="6" height="26" rx="3" fill="#3a7d44"/>
+            <circle cx="43" cy="16" r="10" fill="#4c9a56"/>
+            <circle cx="38" cy="21" r="3" fill="#c0392b"/>
+            <circle cx="47" cy="12" r="3" fill="#c0392b"/>
+            <circle cx="46" cy="24" r="3" fill="#c0392b"/>
+            <g fill="#6b4423">
+              <ellipse cx="18" cy="38" rx="14" ry="12"/>
+              <circle cx="10" cy="26" r="5"/>
+              <circle cx="24" cy="24" r="5.5"/>
+              <rect x="8" y="46" width="6" height="10" rx="3"/>
+              <rect x="22" y="46" width="6" height="10" rx="3"/>
+            </g>
+            <circle cx="21" cy="24" r="1.6" fill="#2b1b12"/>
+          </svg>
+          <svg class="flecha-direccion" viewBox="0 0 24 24" fill="none" stroke="#1c7ea6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h16M14 6l6 6-6 6"/>
+          </svg>
+          <svg viewBox="0 0 64 64"><!-- Cabaña con pino (Cañada) -->
+            <path d="M14 30 L20 12 L26 30 Z" fill="#2f6b3e"/>
+            <path d="M11 40 L20 18 L29 40 Z" fill="#3a7d44"/>
+            <rect x="17" y="40" width="6" height="8" fill="#6b4423"/>
+            <path d="M32 30 L46 18 L60 30 L58 30 L58 50 L34 50 L34 30 Z" fill="#8a5a34"/>
+            <rect x="42" y="36" width="9" height="14" fill="#5a3a20"/>
+            <rect x="36" y="34" width="6" height="6" fill="#cfe6f2"/>
+          </svg>
+        </div>
       </button>
-      <button class="opcion" data-sentido="vuelta">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 21V11l8-6 8 6v10h-5v-6H9v6H4z" fill="#1c7a4d" stroke="#145c3b" stroke-width="0.5"/></svg>
-        Cañada<br>→ Madrid
+      <button class="opcion" data-sentido="vuelta" aria-label="Cañada a Madrid">
+        <div class="fila-iconos">
+          <svg viewBox="0 0 64 64">
+            <path d="M14 30 L20 12 L26 30 Z" fill="#2f6b3e"/>
+            <path d="M11 40 L20 18 L29 40 Z" fill="#3a7d44"/>
+            <rect x="17" y="40" width="6" height="8" fill="#6b4423"/>
+            <path d="M32 30 L46 18 L60 30 L58 30 L58 50 L34 50 L34 30 Z" fill="#8a5a34"/>
+            <rect x="42" y="36" width="9" height="14" fill="#5a3a20"/>
+            <rect x="36" y="34" width="6" height="6" fill="#cfe6f2"/>
+          </svg>
+          <svg class="flecha-direccion" viewBox="0 0 24 24" fill="none" stroke="#1c7ea6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h16M14 6l6 6-6 6"/>
+          </svg>
+          <svg viewBox="0 0 64 64">
+            <ellipse cx="32" cy="56" rx="22" ry="4" fill="#d8e0e3"/>
+            <rect x="40" y="18" width="6" height="26" rx="3" fill="#3a7d44"/>
+            <circle cx="43" cy="16" r="10" fill="#4c9a56"/>
+            <circle cx="38" cy="21" r="3" fill="#c0392b"/>
+            <circle cx="47" cy="12" r="3" fill="#c0392b"/>
+            <circle cx="46" cy="24" r="3" fill="#c0392b"/>
+            <g fill="#6b4423">
+              <ellipse cx="18" cy="38" rx="14" ry="12"/>
+              <circle cx="10" cy="26" r="5"/>
+              <circle cx="24" cy="24" r="5.5"/>
+              <rect x="8" y="46" width="6" height="10" rx="3"/>
+              <rect x="22" y="46" width="6" height="10" rx="3"/>
+            </g>
+            <circle cx="21" cy="24" r="1.6" fill="#2b1b12"/>
+          </svg>
+        </div>
       </button>
     </div>
   </section>
 
   <!-- PANTALLA 2: día -->
   <section class="pantalla" id="pantalla-dia">
-    <button class="volver" data-volver="pantalla-sentido">‹ Volver</button>
+    <button class="volver" data-volver="pantalla-sentido" aria-label="Volver">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0b4f6c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4L7 12l8 8"/></svg>
+    </button>
     <p class="paso-titulo">¿Qué día?</p>
-    <div class="carrusel-dias" id="carrusel-dias"></div>
+    <div class="carrusel-wrapper">
+      <button class="flecha-scroll izq" id="flecha-izq" aria-label="Ver días anteriores">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4L7 12l8 8"/></svg>
+      </button>
+      <div class="carrusel-dias" id="carrusel-dias"></div>
+      <button class="flecha-scroll der" id="flecha-der" aria-label="Ver días siguientes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4l8 8-8 8"/></svg>
+      </button>
+    </div>
   </section>
 
   <!-- PANTALLA 3: franja -->
   <section class="pantalla" id="pantalla-franja">
-    <button class="volver" data-volver="pantalla-dia">‹ Volver</button>
+    <button class="volver" data-volver="pantalla-dia" aria-label="Volver">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0b4f6c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4L7 12l8 8"/></svg>
+    </button>
     <p class="paso-titulo">¿Mañana o tarde?</p>
     <div class="opciones-grandes">
-      <button class="opcion" data-franja="mañana">
+      <button class="opcion" data-franja="mañana" aria-label="Mañana">
         <svg viewBox="0 0 24 24" fill="#e0a100"><circle cx="12" cy="12" r="5"/><g stroke="#e0a100" stroke-width="2"><line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/><line x1="4.2" y1="4.2" x2="6.3" y2="6.3"/><line x1="17.7" y1="17.7" x2="19.8" y2="19.8"/><line x1="4.2" y1="19.8" x2="6.3" y2="17.7"/><line x1="17.7" y1="6.3" x2="19.8" y2="4.2"/></g></svg>
-        Mañana
       </button>
-      <button class="opcion" data-franja="tarde">
-        <svg viewBox="0 0 24 24" fill="#1c3d6b"><path d="M12 3a9 9 0 1 0 8.9 10.4A7 7 0 0 1 12 3z"/></svg>
-        Tarde
+      <button class="opcion" data-franja="tarde" aria-label="Tarde">
+        <svg viewBox="0 0 48 32">
+          <rect x="0" y="24" width="48" height="8" fill="#3a5560"/>
+          <path d="M6 24a18 18 0 0 1 36 0z" fill="#e0752a"/>
+          <g stroke="#e0752a" stroke-width="2.4" stroke-linecap="round">
+            <line x1="24" y1="2" x2="24" y2="7"/>
+            <line x1="8" y1="9" x2="11.5" y2="12.5"/>
+            <line x1="40" y1="9" x2="36.5" y2="12.5"/>
+          </g>
+        </svg>
       </button>
     </div>
   </section>
 
   <!-- PANTALLA 4: resultados -->
   <section class="pantalla" id="pantalla-resultados">
-    <button class="volver" data-volver="pantalla-franja">‹ Volver</button>
+    <button class="volver" data-volver="pantalla-franja" aria-label="Volver">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#0b4f6c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4L7 12l8 8"/></svg>
+    </button>
     <p class="paso-titulo" id="titulo-resultados">Trenes</p>
     <div class="lista-trenes" id="lista-trenes"></div>
     <div id="sin-resultados" class="aviso" style="display:none">
       No hay trenes en esa franja para el día elegido. Prueba con otra franja u otro día.
     </div>
-    <button class="boton-principal" id="boton-buscar-vuelta">Buscar billete de vuelta</button>
-    <button class="boton-principal secundario" id="boton-nueva-consulta">Nueva consulta</button>
+    <button class="boton-principal" id="boton-buscar-vuelta" aria-label="Buscar billete de vuelta">
+      <svg viewBox="0 0 48 32" fill="none">
+        <rect x="2" y="4" width="44" height="24" rx="4" fill="#fff"/>
+        <line x1="30" y1="4" x2="30" y2="28" stroke="#0b4f6c" stroke-width="2" stroke-dasharray="3,3"/>
+        <circle cx="30" cy="4" r="3" fill="var(--azul)"/>
+        <circle cx="30" cy="28" r="3" fill="var(--azul)"/>
+        <g stroke="#0b4f6c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <path d="M8 12h14M16 8l6 4-6 4"/>
+          <path d="M40 20H26M32 16l-6 4 6 4"/>
+        </g>
+      </svg>
+    </button>
+    <button class="boton-principal secundario" id="boton-nueva-consulta" aria-label="Nueva consulta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 12a8 8 0 1 1 2.6 5.9"/>
+        <path d="M4 20v-6h6"/>
+      </svg>
+    </button>
   </section>
 
 </main>
@@ -242,6 +350,13 @@
       cont.appendChild(btn);
     }
   }
+
+  document.getElementById("flecha-izq").addEventListener("click", () => {
+    document.getElementById("carrusel-dias").scrollBy({left: -140, behavior: "smooth"});
+  });
+  document.getElementById("flecha-der").addEventListener("click", () => {
+    document.getElementById("carrusel-dias").scrollBy({left: 140, behavior: "smooth"});
+  });
 
   function elegirDia(iso, btn){
     document.querySelectorAll("#carrusel-dias .dia").forEach(d => d.classList.remove("seleccionado"));
