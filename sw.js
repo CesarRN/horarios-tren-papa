@@ -1,4 +1,4 @@
-const CACHE = "horarios-tren-v1";
+const CACHE = "horarios-tren-v2";
 const ARCHIVOS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (evento) => {
