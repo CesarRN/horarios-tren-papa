@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b4f6c">
+<title>Horarios de tren</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root{
+    --azul:#0b4f6c;
+    --azul-claro:#1c7ea6;
+    --verde:#1c7a4d;
+    --texto:#12212b;
+    --fondo:#f4f7f8;
+    --tarjeta:#ffffff;
+    --borde:#c9d6db;
+    --foco:#e08a00;
+    box-sizing:border-box;
+  }
+  *{box-sizing:inherit}
+  html,body{
+    margin:0; padding:0; height:100%;
+    background:var(--fondo); color:var(--texto);
+    font-family:-apple-system, "Helvetica Neue", Arial, sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  body{
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  header{
+    padding:18px 16px 10px;
+    text-align:center;
+  }
+  header h1{
+    font-size:26px; margin:0 0 4px;
+  }
+  header .subtitulo{
+    font-size:18px; color:#3a5560; margin:0;
+  }
+  main{
+    max-width:640px; margin:0 auto; padding:8px 16px 40px;
+  }
+  .pantalla{ display:none; }
+  .pantalla.activa{ display:block; }
+
+  .volver{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:20px; background:none; border:none; color:var(--azul);
+    padding:10px 4px; margin-bottom:4px; cursor:pointer;
+  }
+  .volver:focus-visible{ outline:3px solid var(--foco); border-radius:8px; }
+
+  .opciones-grandes{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:12px;
+  }
+  @media (max-width:420px){
+    .opciones-grandes{ grid-template-columns:1fr; }
+  }
+  .opcion{
+    background:var(--tarjeta); border:3px solid var(--borde); border-radius:20px;
+    padding:22px 10px; display:flex; flex-direction:column; align-items:center;
+    gap:10px; cursor:pointer; font-size:22px; font-weight:600; color:var(--texto);
+    min-height:150px; justify-content:center;
+  }
+  .opcion:active{ transform:scale(0.98); }
+  .opcion:focus-visible{ outline:4px solid var(--foco); }
+  .opcion.seleccionada{ border-color:var(--azul-claro); background:#eaf4f8; }
+  .opcion svg{ width:64px; height:64px; }
+
+  .carrusel-dias{
+    display:flex; gap:12px; overflow-x:auto; padding:10px 4px 16px;
+    scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+  }
+  .dia{
+    scroll-snap-align:center; flex:0 0 auto;
+    background:var(--tarjeta); border:3px solid var(--borde); border-radius:18px;
+    min-width:110px; padding:16px 8px; text-align:center; cursor:pointer;
+  }
+  .dia .mes{ font-size:16px; text-transform:uppercase; color:#3a5560; }
+  .dia .num{ font-size:40px; font-weight:700; line-height:1.1; }
+  .dia .diasem{ font-size:16px; color:#3a5560; }
+  .dia.seleccionado{ border-color:var(--azul-claro); background:#eaf4f8; }
+  .dia:focus-visible{ outline:4px solid var(--foco); }
+
+  .lista-trenes{ display:flex; flex-direction:column; gap:14px; margin-top:14px; }
+  .tren{
+    background:var(--tarjeta); border:3px solid var(--borde); border-radius:18px;
+    padding:18px; font-size:22px; display:flex; justify-content:space-between;
+    align-items:center; gap:10px;
+  }
+  .tren .horas{ font-weight:700; font-size:28px; }
+  .tren .estaciones{ font-size:17px; color:#3a5560; margin-top:4px; }
+  .tren .flecha{ font-size:26px; color:var(--azul-claro); }
+
+  .aviso{
+    background:#fff7e6; border:2px solid #e3b34d; border-radius:14px;
+    padding:16px; font-size:19px; margin-top:16px;
+  }
+  .aviso.error{ background:#fdecec; border-color:#d9534f; }
+
+  .boton-principal{
+    display:block; width:100%; margin-top:22px; padding:18px;
+    background:var(--azul); color:#fff; border:none; border-radius:16px;
+    font-size:22px; font-weight:700; cursor:pointer;
+  }
+  .boton-principal:focus-visible{ outline:4px solid var(--foco); }
+  .boton-principal.secundario{
+    background:#fff; color:var(--azul); border:3px solid var(--azul);
+  }
+
+  .paso-titulo{ font-size:22px; font-weight:700; margin:14px 0 4px; }
+
+  footer{ text-align:center; font-size:14px; color:#5a7079; padding:20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🚆 Horarios de tren</h1>
+  <p class="subtitulo" id="subtitulo">Madrid ↔ El Herradón - La Cañada</p>
+</header>
+
+<main>
+
+  <!-- PANTALLA 1: sentido -->
+  <section class="pantalla activa" id="pantalla-sentido">
+    <p class="paso-titulo">¿A dónde quieres ir?</p>
+    <div class="opciones-grandes">
+      <button class="opcion" data-sentido="ida">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="1.6"><path d="M12 2C7.6 2 4 5.6 4 10c0 6 8 12 8 12s8-6 8-12c0-4.4-3.6-8-8-8z" fill="#c0392b"/><circle cx="12" cy="10" r="3" fill="#fff"/></svg>
+        Madrid<br>→ Cañada
+      </button>
+      <button class="opcion" data-sentido="vuelta">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 21V11l8-6 8 6v10h-5v-6H9v6H4z" fill="#1c7a4d" stroke="#145c3b" stroke-width="0.5"/></svg>
+        Cañada<br>→ Madrid
+      </button>
+    </div>
+  </section>
+
+  <!-- PANTALLA 2: día -->
+  <section class="pantalla" id="pantalla-dia">
+    <button class="volver" data-volver="pantalla-sentido">‹ Volver</button>
+    <p class="paso-titulo">¿Qué día?</p>
+    <div class="carrusel-dias" id="carrusel-dias"></div>
+  </section>
+
+  <!-- PANTALLA 3: franja -->
+  <section class="pantalla" id="pantalla-franja">
+    <button class="volver" data-volver="pantalla-dia">‹ Volver</button>
+    <p class="paso-titulo">¿Mañana o tarde?</p>
+    <div class="opciones-grandes">
+      <button class="opcion" data-franja="mañana">
+        <svg viewBox="0 0 24 24" fill="#e0a100"><circle cx="12" cy="12" r="5"/><g stroke="#e0a100" stroke-width="2"><line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/><line x1="4.2" y1="4.2" x2="6.3" y2="6.3"/><line x1="17.7" y1="17.7" x2="19.8" y2="19.8"/><line x1="4.2" y1="19.8" x2="6.3" y2="17.7"/><line x1="17.7" y1="6.3" x2="19.8" y2="4.2"/></g></svg>
+        Mañana
+      </button>
+      <button class="opcion" data-franja="tarde">
+        <svg viewBox="0 0 24 24" fill="#1c3d6b"><path d="M12 3a9 9 0 1 0 8.9 10.4A7 7 0 0 1 12 3z"/></svg>
+        Tarde
+      </button>
+    </div>
+  </section>
+
+  <!-- PANTALLA 4: resultados -->
+  <section class="pantalla" id="pantalla-resultados">
+    <button class="volver" data-volver="pantalla-franja">‹ Volver</button>
+    <p class="paso-titulo" id="titulo-resultados">Trenes</p>
+    <div class="lista-trenes" id="lista-trenes"></div>
+    <div id="sin-resultados" class="aviso" style="display:none">
+      No hay trenes en esa franja para el día elegido. Prueba con otra franja u otro día.
+    </div>
+    <button class="boton-principal" id="boton-buscar-vuelta">Buscar billete de vuelta</button>
+    <button class="boton-principal secundario" id="boton-nueva-consulta">Nueva consulta</button>
+  </section>
+
+</main>
+
+<footer id="pie"></footer>
+
+<script>
+(function(){
+
+  const MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+  const DIAS_SEM = ["dom","lun","mar","mié","jue","vie","sáb"];
+
+  const estado = {
+    horarios: null,
+    sentidoIda: true,     // true = Madrid -> Cañada (ida), false = vuelta
+    fechaIda: null,
+    franjaIda: null,
+    esVuelta: false,      // estamos en el segundo tramo (regreso) del flujo
+    fechaVuelta: null,
+    franjaVuelta: null,
+  };
+
+  function pantallas() { return document.querySelectorAll(".pantalla"); }
+  function mostrar(id){
+    pantallas().forEach(p => p.classList.toggle("activa", p.id === id));
+    window.scrollTo(0,0);
+  }
+
+  function hoyISO(offset){
+    const d = new Date();
+    d.setDate(d.getDate() + offset);
+    return d.toISOString().slice(0,10);
+  }
+
+  function formateaDia(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    const fecha = new Date(y, m-1, d);
+    return { mes: MESES[m-1], num: d, diasem: DIAS_SEM[fecha.getDay()] };
+  }
+
+  async function cargarHorarios(){
+    try{
+      const resp = await fetch("data/horarios.json", {cache:"no-store"});
+      estado.horarios = await resp.json();
+      const pie = document.getElementById("pie");
+      if (estado.horarios.generado){
+        const f = new Date(estado.horarios.generado);
+        pie.textContent = "Horarios actualizados: " + f.toLocaleDateString("es-ES", {day:"numeric", month:"long"});
+      } else {
+        pie.textContent = "Aún no se han generado horarios.";
+      }
+    }catch(e){
+      document.getElementById("pie").textContent = "No se han podido cargar los horarios.";
+    }
+  }
+
+  function construyeCarruselDias(){
+    const cont = document.getElementById("carrusel-dias");
+    cont.innerHTML = "";
+    for (let i=0; i<6; i++){
+      const iso = hoyISO(i);
+      const {mes, num, diasem} = formateaDia(iso);
+      const btn = document.createElement("button");
+      btn.className = "dia";
+      btn.dataset.fecha = iso;
+      btn.innerHTML = `<div class="mes">${mes}</div><div class="num">${num}</div><div class="diasem">${diasem}</div>`;
+      btn.addEventListener("click", () => elegirDia(iso, btn));
+      cont.appendChild(btn);
+    }
+  }
+
+  function elegirDia(iso, btn){
+    document.querySelectorAll("#carrusel-dias .dia").forEach(d => d.classList.remove("seleccionado"));
+    btn.classList.add("seleccionado");
+    if (estado.esVuelta){ estado.fechaVuelta = iso; } else { estado.fechaIda = iso; }
+    mostrar("pantalla-franja");
+  }
+
+  function elegirFranja(franja){
+    if (estado.esVuelta){ estado.franjaVuelta = franja; } else { estado.franjaIda = franja; }
+    muestraResultados();
+  }
+
+  function muestraResultados(){
+    const direccion = estado.esVuelta ? !estado.sentidoIda : estado.sentidoIda;
+    const clave = direccion ? "ida" : "vuelta";
+    const fecha = estado.esVuelta ? estado.fechaVuelta : estado.fechaIda;
+    const franja = estado.esVuelta ? estado.franjaVuelta : estado.franjaIda;
+
+    const trenesDia = (estado.horarios && estado.horarios[clave] && estado.horarios[clave][fecha]) || [];
+    const trenes = trenesDia.filter(t => t.franja === franja);
+
+    const {mes, num, diasem} = formateaDia(fecha);
+    document.getElementById("titulo-resultados").textContent =
+      `${direccion ? "Madrid → Cañada" : "Cañada → Madrid"} · ${diasem} ${num} ${mes} · ${franja}`;
+
+    const lista = document.getElementById("lista-trenes");
+    lista.innerHTML = "";
+    document.getElementById("sin-resultados").style.display = trenes.length ? "none" : "block";
+
+    trenes.forEach(t => {
+      const div = document.createElement("div");
+      div.className = "tren";
+      div.innerHTML = `
+        <div>
+          <div class="horas">${t.salida} <span class="flecha">→</span> ${t.llegada}</div>
+          <div class="estaciones">${t.estacion_origen} → ${t.estacion_destino}</div>
+        </div>`;
+      lista.appendChild(div);
+    });
+
+    document.getElementById("boton-buscar-vuelta").style.display = estado.esVuelta ? "none" : "block";
+    mostrar("pantalla-resultados");
+  }
+
+  function iniciaVuelta(){
+    estado.esVuelta = true;
+    construyeCarruselDias();
+    mostrar("pantalla-dia");
+  }
+
+  function reinicia(){
+    estado.sentidoIda = true;
+    estado.fechaIda = null;
+    estado.franjaIda = null;
+    estado.esVuelta = false;
+    estado.fechaVuelta = null;
+    estado.franjaVuelta = null;
+    document.querySelectorAll(".opcion").forEach(o => o.classList.remove("seleccionada"));
+    mostrar("pantalla-sentido");
+  }
+
+  // Eventos
+  document.querySelectorAll("[data-sentido]").forEach(btn=>{
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#pantalla-sentido .opcion").forEach(o=>o.classList.remove("seleccionada"));
+      btn.classList.add("seleccionada");
+      estado.sentidoIda = btn.dataset.sentido === "ida";
+      estado.esVuelta = false;
+      construyeCarruselDias();
+      mostrar("pantalla-dia");
+    });
+  });
+
+  document.querySelectorAll("[data-franja]").forEach(btn=>{
+    btn.addEventListener("click", () => elegirFranja(btn.dataset.franja));
+  });
+
+  document.querySelectorAll("[data-volver]").forEach(btn=>{
+    btn.addEventListener("click", () => mostrar(btn.dataset.volver));
+  });
+
+  document.getElementById("boton-buscar-vuelta").addEventListener("click", iniciaVuelta);
+  document.getElementById("boton-nueva-consulta").addEventListener("click", reinicia);
+
+  cargarHorarios();
+
+  if ("serviceWorker" in navigator){
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  }
+})();
+</script>
+</body>
+</html>
