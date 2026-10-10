@@ -1,93 +1,7 @@
 {
   "fuente": "https://ssl.renfe.com/gtransit/Fichero_AV_LD/google_transit.zip",
-  "generado": "2026-10-09T10:27:12",
+  "generado": "2026-10-10T09:45:01",
   "ida": {
-    "2026-10-09": [
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "mañana",
-        "llegada": "08:00",
-        "salida": "06:40"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Atocha",
-        "franja": "mañana",
-        "llegada": "11:32",
-        "salida": "09:25"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "mañana",
-        "llegada": "11:01",
-        "salida": "09:36"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "mañana",
-        "llegada": "13:48",
-        "salida": "12:25"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Chamartín",
-        "franja": "tarde",
-        "llegada": "16:28",
-        "salida": "14:44"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "tarde",
-        "llegada": "16:22",
-        "salida": "14:55"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "tarde",
-        "llegada": "16:51",
-        "salida": "15:25"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "tarde",
-        "llegada": "18:29",
-        "salida": "17:06"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "tarde",
-        "llegada": "19:20",
-        "salida": "17:53"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "tarde",
-        "llegada": "19:49",
-        "salida": "18:23"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Príncipe Pío",
-        "franja": "tarde",
-        "llegada": "21:48",
-        "salida": "20:25"
-      },
-      {
-        "estacion_destino": "El Herradón - La Cañada",
-        "estacion_origen": "Madrid-Atocha",
-        "franja": "tarde",
-        "llegada": "23:32",
-        "salida": "21:31"
-      }
-    ],
     "2026-10-10": [
       {
         "estacion_destino": "El Herradón - La Cañada",
@@ -1121,6 +1035,92 @@
       }
     ],
     "2026-10-22": [
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "mañana",
+        "llegada": "08:00",
+        "salida": "06:40"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Atocha",
+        "franja": "mañana",
+        "llegada": "11:32",
+        "salida": "09:25"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "mañana",
+        "llegada": "11:01",
+        "salida": "09:36"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "mañana",
+        "llegada": "13:48",
+        "salida": "12:25"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Chamartín",
+        "franja": "tarde",
+        "llegada": "16:28",
+        "salida": "14:44"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "tarde",
+        "llegada": "16:22",
+        "salida": "14:55"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "tarde",
+        "llegada": "16:51",
+        "salida": "15:25"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "tarde",
+        "llegada": "18:29",
+        "salida": "17:06"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "tarde",
+        "llegada": "19:20",
+        "salida": "17:53"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "tarde",
+        "llegada": "19:49",
+        "salida": "18:23"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Príncipe Pío",
+        "franja": "tarde",
+        "llegada": "21:48",
+        "salida": "20:25"
+      },
+      {
+        "estacion_destino": "El Herradón - La Cañada",
+        "estacion_origen": "Madrid-Atocha",
+        "franja": "tarde",
+        "llegada": "23:32",
+        "salida": "21:31"
+      }
+    ],
+    "2026-10-23": [
       {
         "estacion_destino": "El Herradón - La Cañada",
         "estacion_origen": "Madrid-Príncipe Pío",
@@ -1209,99 +1209,6 @@
   },
   "limite_tarde": "14:00",
   "vuelta": {
-    "2026-10-09": [
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "07:43",
-        "salida": "06:12"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "08:11",
-        "salida": "06:45"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "09:28",
-        "salida": "07:57"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "11:26",
-        "salida": "10:01"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "11:55",
-        "salida": "10:25"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "12:40",
-        "salida": "11:13"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "12:40",
-        "salida": "11:18"
-      },
-      {
-        "estacion_destino": "Madrid-Chamartín",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "mañana",
-        "llegada": "15:06",
-        "salida": "13:30"
-      },
-      {
-        "estacion_destino": "Madrid-Chamartín",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "tarde",
-        "llegada": "16:51",
-        "salida": "15:15"
-      },
-      {
-        "estacion_destino": "Madrid-Chamartín",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "tarde",
-        "llegada": "17:06",
-        "salida": "15:33"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "tarde",
-        "llegada": "17:29",
-        "salida": "16:04"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "tarde",
-        "llegada": "20:41",
-        "salida": "19:11"
-      },
-      {
-        "estacion_destino": "Madrid-Príncipe Pío",
-        "estacion_origen": "El Herradón - La Cañada",
-        "franja": "tarde",
-        "llegada": "21:42",
-        "salida": "20:20"
-      }
-    ],
     "2026-10-10": [
       {
         "estacion_destino": "Madrid-Príncipe Pío",
@@ -2489,6 +2396,106 @@
       }
     ],
     "2026-10-22": [
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "07:43",
+        "salida": "06:12"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "08:11",
+        "salida": "06:45"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "09:28",
+        "salida": "07:57"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "11:26",
+        "salida": "10:01"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "11:55",
+        "salida": "10:25"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "12:40",
+        "salida": "11:13"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "12:40",
+        "salida": "11:18"
+      },
+      {
+        "estacion_destino": "Madrid-Chamartín",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "mañana",
+        "llegada": "15:06",
+        "salida": "13:30"
+      },
+      {
+        "estacion_destino": "Madrid-Chamartín",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "tarde",
+        "llegada": "16:51",
+        "salida": "15:15"
+      },
+      {
+        "estacion_destino": "Madrid-Chamartín",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "tarde",
+        "llegada": "17:06",
+        "salida": "15:33"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "tarde",
+        "llegada": "17:29",
+        "salida": "16:04"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "tarde",
+        "llegada": "20:41",
+        "salida": "19:11"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "tarde",
+        "llegada": "21:42",
+        "salida": "20:20"
+      },
+      {
+        "estacion_destino": "Madrid-Príncipe Pío",
+        "estacion_origen": "El Herradón - La Cañada",
+        "franja": "tarde",
+        "llegada": "23:40",
+        "salida": "21:57"
+      }
+    ],
+    "2026-10-23": [
       {
         "estacion_destino": "Madrid-Príncipe Pío",
         "estacion_origen": "El Herradón - La Cañada",
